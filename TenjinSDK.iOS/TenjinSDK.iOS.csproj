@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net10.0-ios</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>true</ImplicitUsings>
+        <IsBindingProject>true</IsBindingProject>
+        <SupportedOSPlatformVersion>14.3</SupportedOSPlatformVersion>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageId>TenjinSDK.DotNet.Bindings</PackageId>
+        <RuntimeIdentifiers>ios-arm64; iossimulator-arm64;iossimulator-x64</RuntimeIdentifiers>
+        <Version>1.15.0</Version>
+        <Authors>Przemysław Raciborski [thefex]</Authors>
+        <Description>.net-ios bindings for TenjinSDK. This package is not affiliated with TenjinSDK at all.</Description>
+        <Configurations>Debug;Release;AppStore;AdHoc</Configurations>
+        <Platforms>AnyCPU</Platforms>
+        <IsTrimmable>true</IsTrimmable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ObjcBindingApiDefinition Include="ApiDefinitions.cs"/>
+        <ObjcBindingCoreSource Include="StructsAndEnums.cs"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <NativeReference Include="TenjinSDK.xcframework">
+            <Kind>Framework</Kind>
+            <SmartLink>False</SmartLink>
+            <Frameworks>AdServices</Frameworks>
+        </NativeReference>
+    </ItemGroup>
+
+</Project>
