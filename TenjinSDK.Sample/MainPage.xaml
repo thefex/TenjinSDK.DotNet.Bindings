@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TenjinSDK.Sample.MainPage"
+             Title="Tenjin SDK Sample">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="16">
+
+            <Label Text="Tenjin SDK .NET bindings"
+                   Style="{StaticResource Headline}"
+                   SemanticProperties.HeadingLevel="Level1" />
+
+            <Label x:Name="SdkVersionLabel"
+                   Text="SDK version: —"
+                   SemanticProperties.HeadingLevel="Level2" />
+
+            <Entry x:Name="ApiTokenEntry"
+                   Placeholder="Tenjin API key"
+                   Text="" />
+
+            <Button Text="Initialize + Connect"
+                    Clicked="OnInitializeClicked"
+                    HorizontalOptions="Fill" />
+
+            <Button Text="Send event ('test_event')"
+                    Clicked="OnSendEventClicked"
+                    HorizontalOptions="Fill" />
+
+            <Button Text="Send event with value ('level_up' = 5)"
+                    Clicked="OnSendEventWithValueClicked"
+                    HorizontalOptions="Fill" />
+
+            <Button Text="Send transaction ($4.99)"
+                    Clicked="OnSendTransactionClicked"
+                    HorizontalOptions="Fill" />
+
+            <Button Text="Set customer user id"
+                    Clicked="OnSetUserIdClicked"
+                    HorizontalOptions="Fill" />
+
+            <Button Text="Get analytics installation id"
+                    Clicked="OnGetAnalyticsIdClicked"
+                    HorizontalOptions="Fill" />
+
+            <Label Text="Status"
+                   FontAttributes="Bold" />
+            <Label x:Name="StatusLabel"
+                   Text="Idle."
+                   LineBreakMode="WordWrap" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

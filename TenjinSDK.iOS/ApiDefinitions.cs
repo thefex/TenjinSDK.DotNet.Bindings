@@ -149,6 +149,22 @@ interface TenjinSDK
 	[Export ("handleSubscriptionPurchase:")]
 	void HandleSubscriptionPurchase (SKPaymentTransaction transaction);
 
+	// +(TenjinPurchasesManager *)purchasesManager;
+	[Static]
+	[Export ("purchasesManager")]
+	TenjinPurchasesManager PurchasesManager { get; }
+
+	// +(void)subscriptionWithProductName:(NSString *)productName andCurrencyCode:(NSString *)currencyCode andUnitPrice:(NSDecimalNumber *)price andTransactionId:(NSString *)transactionId andOriginalTransactionId:(NSString *)originalTransactionId andBase64Receipt:(NSString *)receipt andSKTransaction:(NSString *)skTransaction;
+	[Static]
+	[Export ("subscriptionWithProductName:andCurrencyCode:andUnitPrice:andTransactionId:andOriginalTransactionId:andBase64Receipt:andSKTransaction:")]
+	void SubscriptionWithProductName (string productName, string currencyCode, NSDecimalNumber price, string transactionId, string originalTransactionId, string receipt, string skTransaction);
+
+	// +(void)subscriptionWithStoreKitForProductId:(NSString *)productId andCurrencyCode:(NSString *)currencyCode andUnitPrice:(NSDecimalNumber *)price __attribute__((availability(ios,introduced=16.0)));
+	[Static]
+	[Introduced (PlatformName.iOS, 16, 0)]
+	[Export ("subscriptionWithStoreKitForProductId:andCurrencyCode:andUnitPrice:")]
+	void SubscriptionWithStoreKitForProductId (string productId, string currencyCode, NSDecimalNumber price);
+
 	// +(void)optOut;
 	[Static]
 	[Export ("optOut")]
@@ -279,6 +295,11 @@ interface TenjinSDK
 	[Export ("setWrapperVersion:")]
 	void SetWrapperVersion (string wrapperVersion);
 
+	// +(void)setPluginVersion:(NSString *)plugin version:(NSString *)version;
+	[Static]
+	[Export ("setPluginVersion:version:")]
+	void SetPluginVersion (string plugin, string version);
+
 	// +(void)setValue:(NSString *)value forKey:(NSString *)key;
 	[Static]
 	[Export ("setValue:forKey:")]
@@ -308,17 +329,17 @@ interface TenjinSDK
 [BaseType(typeof(NSObject), Name = "_TtC9TenjinSDK18TJNUserProfileData")]
 interface TJNUserProfileData
 {
-	// @property (readonly, nonatomic) int sessionCount;
+	// @property (readonly, nonatomic) NSInteger sessionCount;
 	[Export ("sessionCount")]
-	int SessionCount { get; }
+	nint SessionCount { get; }
 
-	// @property (readonly, nonatomic) int totalSessionTime;
+	// @property (readonly, nonatomic) int64_t totalSessionTime;
 	[Export ("totalSessionTime")]
-	int TotalSessionTime { get; }
+	long TotalSessionTime { get; }
 
-	// @property (readonly, nonatomic) int lastSessionLength;
+	// @property (readonly, nonatomic) int64_t lastSessionLength;
 	[Export ("lastSessionLength")]
-	int LastSessionLength { get; }
+	long LastSessionLength { get; }
 
 	// @property (readonly, copy, nonatomic) NSDate * _Nullable currentSessionStartTime;
 	[NullAllowed, Export ("currentSessionStartTime", ArgumentSemantic.Copy)]
@@ -328,9 +349,9 @@ interface TJNUserProfileData
 	[NullAllowed, Export ("lastBackgroundTime", ArgumentSemantic.Copy)]
 	NSDate LastBackgroundTime { get; }
 
-	// @property (readonly, nonatomic) int currentSessionPausedTime;
+	// @property (readonly, nonatomic) int64_t currentSessionPausedTime;
 	[Export ("currentSessionPausedTime")]
-	int CurrentSessionPausedTime { get; }
+	long CurrentSessionPausedTime { get; }
 
 	// @property (readonly, copy, nonatomic) NSDate * _Nullable firstSessionDate;
 	[NullAllowed, Export ("firstSessionDate", ArgumentSemantic.Copy)]
@@ -340,25 +361,37 @@ interface TJNUserProfileData
 	[NullAllowed, Export ("lastSessionDate", ArgumentSemantic.Copy)]
 	NSDate LastSessionDate { get; }
 
-	// @property (readonly, nonatomic) int iapTransactionCount;
+	// @property (readonly, nonatomic) NSInteger iapTransactionCount;
 	[Export ("iapTransactionCount")]
-	int IapTransactionCount { get; }
+	nint IapTransactionCount { get; }
+
+	// @property (readonly, copy, nonatomic) NSDictionary<NSString *,NSNumber *> * _Nonnull iapRevenueByCurrency;
+	[Export ("iapRevenueByCurrency", ArgumentSemantic.Copy)]
+	NSDictionary<NSString, NSNumber> IapRevenueByCurrency { get; }
 
 	// @property (readonly, nonatomic) double totalILRDRevenueUSD;
 	[Export ("totalILRDRevenueUSD")]
 	double TotalILRDRevenueUSD { get; }
 
-	// @property (readonly, nonatomic) int currentSessionDuration;
+	// @property (readonly, copy, nonatomic) NSDictionary<NSString *,NSNumber *> * _Nonnull ilrdRevenueByNetwork;
+	[Export ("ilrdRevenueByNetwork", ArgumentSemantic.Copy)]
+	NSDictionary<NSString, NSNumber> IlrdRevenueByNetwork { get; }
+
+	// @property (readonly, nonatomic) int64_t currentSessionDuration;
 	[Export ("currentSessionDuration")]
-	int CurrentSessionDuration { get; }
+	long CurrentSessionDuration { get; }
 
-	// @property (readonly, nonatomic) int totalSessionTimeIncludingCurrent;
+	// @property (readonly, nonatomic) int64_t totalSessionTimeIncludingCurrent;
 	[Export ("totalSessionTimeIncludingCurrent")]
-	int TotalSessionTimeIncludingCurrent { get; }
+	long TotalSessionTimeIncludingCurrent { get; }
 
-	// @property (readonly, nonatomic) int averageSessionLength;
+	// @property (readonly, nonatomic) int64_t averageSessionLength;
 	[Export ("averageSessionLength")]
-	int AverageSessionLength { get; }
+	long AverageSessionLength { get; }
+
+	// @property (readonly, copy, nonatomic) NSArray<NSString *> * _Nonnull purchasedProductIDsArray;
+	[Export ("purchasedProductIDsArray", ArgumentSemantic.Copy)]
+	string[] PurchasedProductIDsArray { get; }
 
 	// -(double)getILRDRevenueForNetwork:(enum TJNAdNetwork)network __attribute__((warn_unused_result("")));
 	[Export ("getILRDRevenueForNetwork:")]
@@ -368,11 +401,23 @@ interface TJNUserProfileData
 	[Export ("getIAPRevenueForCurrency:")]
 	double GetIAPRevenueForCurrency (string currencyCode);
 
-	// -(id)toDictionary __attribute__((warn_unused_result("")));
+	// -(NSDictionary<NSString *,id> *)toDictionary __attribute__((warn_unused_result("")));
 	[Export ("toDictionary")]
-	NSObject ToDictionary { get; }
+	NSDictionary ToDictionary { get; }
 
-	// -(id)toScalarDictionary __attribute__((warn_unused_result("")));
+	// -(NSDictionary<NSString *,id> *)toScalarDictionary __attribute__((warn_unused_result("")));
 	[Export ("toScalarDictionary")]
-	NSObject ToScalarDictionary { get; }
+	NSDictionary ToScalarDictionary { get; }
+}
+
+// @interface TenjinPurchasesManager : NSObject
+[BaseType(typeof(NSObject), Name = "_TtC9TenjinSDK22TenjinPurchasesManager")]
+[Introduced (PlatformName.iOS, 16, 0)]
+[DisableDefaultCtor]
+interface TenjinPurchasesManager
+{
+	// +(void)handleSubscriptionWithProductId:(NSString *)productId currencyCode:(NSString *)currencyCode unitPrice:(NSDecimalNumber *)unitPrice;
+	[Static]
+	[Export ("handleSubscriptionWithProductId:currencyCode:unitPrice:")]
+	void HandleSubscription (string productId, string currencyCode, NSDecimalNumber unitPrice);
 }

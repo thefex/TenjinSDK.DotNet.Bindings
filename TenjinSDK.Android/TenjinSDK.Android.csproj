@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net10.0-android</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>true</ImplicitUsings>
+        <IsBindingProject>true</IsBindingProject>
+        <SupportedOSPlatformVersion>21</SupportedOSPlatformVersion>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageId>TenjinSDK.DotNet.Bindings.Android</PackageId>
+        <Version>1.20.0</Version>
+        <Authors>Przemysław Raciborski [thefex]</Authors>
+        <Description>.net-android bindings for TenjinSDK. This package is not affiliated with TenjinSDK at all.</Description>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <AndroidLibrary Include="tenjin.aar" Bind="true" />
+    </ItemGroup>
+
+    <!-- Runtime dependencies of the Tenjin Android SDK (see the SDK's Maven POM:
+         kotlin-stdlib 1.9.24, room-runtime 2.5.1, gson 2.13.1, installreferrer 2.2).
+         Room is pinned to 2.5.x so the SDK's Room-generated code stays ABI-compatible. -->
+    <ItemGroup>
+        <PackageReference Include="Xamarin.Kotlin.StdLib" Version="1.9.23.3" />
+        <PackageReference Include="Xamarin.AndroidX.Room.Runtime" Version="2.5.1.2" />
+        <PackageReference Include="GoogleGson" Version="2.14.0" />
+    </ItemGroup>
+
+    <!-- Play Install Referrer has no maintained .NET binding; pull the official
+         Maven artifact and ship it as a runtime-only library (no managed binding). -->
+    <ItemGroup>
+        <AndroidMavenLibrary Include="com.android.installreferrer:installreferrer" Version="2.2" Repository="Google" Bind="false" />
+    </ItemGroup>
+
+</Project>
