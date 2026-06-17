@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <!-- getAppStore() is static but setAppStore() is an instance method. The generator
+       would otherwise merge them into a single static property whose setter uses
+       'this' (CS0026). Force both to stay plain methods. -->
+  <attr path="/api/package[@name='com.tenjin.android']/class[@name='TenjinSDK']/method[@name='getAppStore']" name="propertyName"></attr>
+  <attr path="/api/package[@name='com.tenjin.android']/class[@name='TenjinSDK']/method[@name='setAppStore']" name="propertyName"></attr>
+
+  <!-- Bind only the public-facing Tenjin API. Remove internal implementation
+       namespaces so we don't expose internals (Room DAOs, param providers, network
+       and threading helpers) or generate noise from unbound third-party types. -->
+  <remove-node path="/api/package[@name='com.tenjin.android.store']" />
+  <remove-node path="/api/package[@name='com.tenjin.android.network']" />
+  <remove-node path="/api/package[@name='com.tenjin.android.config']" />
+  <remove-node path="/api/package[@name='com.tenjin.android.params']" />
+  <remove-node path="/api/package[@name='com.tenjin.android.params.base']" />
+  <remove-node path="/api/package[@name='com.tenjin.android.params.platform']" />
+  <remove-node path="/api/package[@name='com.tenjin.android.params.referral']" />
+  <remove-node path="/api/package[@name='com.tenjin.android.utils']" />
+  <remove-node path="/api/package[@name='com.tenjin.android.utils.adnetwork']" />
+  <remove-node path="/api/package[@name='com.tenjin.android.utils.threading']" />
+</metadata>

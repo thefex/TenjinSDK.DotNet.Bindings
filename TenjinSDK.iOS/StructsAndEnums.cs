@@ -19,5 +19,7 @@ public enum TJNAdNetwork : long
     HyperBid = 3,
     TopOn = 4,
     Cas = 5,
-    TradPlus = 6
+    TradPlus = 6,
+    CloudX = 7,
+    Custom = 8
 }
