@@ -7,7 +7,7 @@ public class TenjinService : ITenjinService
 {
     // The Android SDK has no runtime version accessor (only wrapper/plugin version),
     // so we surface the bound SDK version that this binding ships.
-    private const string BoundSdkVersion = "1.20.0";
+    private const string BoundSdkVersion = "1.21.0";
 
     private global::Com.Tenjin.Android.TenjinSDK? _instance;
 
