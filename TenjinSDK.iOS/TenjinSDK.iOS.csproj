@@ -8,7 +8,7 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageId>TenjinSDK.DotNet.Bindings</PackageId>
         <RuntimeIdentifiers>ios-arm64; iossimulator-arm64;iossimulator-x64</RuntimeIdentifiers>
-        <Version>1.17.1</Version>
+        <Version>1.17.2</Version>
         <Authors>Przemysław Raciborski [thefex]</Authors>
         <Description>.net-ios bindings for TenjinSDK. This package is not affiliated with TenjinSDK at all.</Description>
         <Configurations>Debug;Release;AppStore;AdHoc</Configurations>

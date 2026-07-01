@@ -5,8 +5,8 @@ This package is **not affiliated with Tenjin**.
 
 | Platform | Project | Native SDK | NuGet id |
 | --- | --- | --- | --- |
-| iOS | [`TenjinSDK.iOS`](TenjinSDK.iOS) | [tenjin-ios-sdk 1.17.1](https://github.com/tenjin/tenjin-ios-sdk/releases/tag/1.17.1) | `TenjinSDK.DotNet.Bindings` |
-| Android | [`TenjinSDK.Android`](TenjinSDK.Android) | [tenjin-android-sdk 1.20.0](https://github.com/tenjin/tenjin-android-sdk/releases/tag/1.20.0) | `TenjinSDK.DotNet.Bindings.Android` |
+| iOS | [`TenjinSDK.iOS`](TenjinSDK.iOS) | [tenjin-ios-sdk 1.17.2](https://github.com/tenjin/tenjin-ios-sdk/releases/tag/1.17.2) | `TenjinSDK.DotNet.Bindings` |
+| Android | [`TenjinSDK.Android`](TenjinSDK.Android) | [tenjin-android-sdk 1.21.0](https://github.com/tenjin/tenjin-android-sdk/releases/tag/1.21.0) | `TenjinSDK.DotNet.Bindings.Android` |
 
 Both target **.NET 10** (`net10.0-ios` / `net10.0-android`).
 

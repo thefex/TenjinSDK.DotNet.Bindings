@@ -7,7 +7,7 @@
         <SupportedOSPlatformVersion>21</SupportedOSPlatformVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageId>TenjinSDK.DotNet.Bindings.Android</PackageId>
-        <Version>1.20.0</Version>
+        <Version>1.21.0</Version>
         <Authors>Przemysław Raciborski [thefex]</Authors>
         <Description>.net-android bindings for TenjinSDK. This package is not affiliated with TenjinSDK at all.</Description>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
