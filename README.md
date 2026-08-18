@@ -5,8 +5,8 @@ This package is **not affiliated with Tenjin**.
 
 | Platform | Project | Native SDK | NuGet id |
 | --- | --- | --- | --- |
-| iOS | [`TenjinSDK.iOS`](TenjinSDK.iOS) | [tenjin-ios-sdk 1.17.2](https://github.com/tenjin/tenjin-ios-sdk/releases/tag/1.17.2) | `TenjinSDK.DotNet.Bindings` |
-| Android | [`TenjinSDK.Android`](TenjinSDK.Android) | [tenjin-android-sdk 1.21.0](https://github.com/tenjin/tenjin-android-sdk/releases/tag/1.21.0) | `TenjinSDK.DotNet.Bindings.Android` |
+| iOS | [`TenjinSDK.iOS`](TenjinSDK.iOS) | [tenjin-ios-sdk 1.19.0](https://github.com/tenjin/tenjin-ios-sdk/releases/tag/1.19.0) | `TenjinSDK.DotNet.Bindings` |
+| Android | [`TenjinSDK.Android`](TenjinSDK.Android) | [tenjin-android-sdk 1.23.0](https://github.com/tenjin/tenjin-android-sdk/releases/tag/1.23.0) | `TenjinSDK.DotNet.Bindings.Android` |
 
 Both target **.NET 10** (`net10.0-ios` / `net10.0-android`).
 
@@ -36,6 +36,12 @@ TenjinSDK.TransactionWithProductName("com.example.product", "USD", 1,
     new Foundation.NSDecimalNumber("4.99"));
 
 var installId = TenjinSDK.AnalyticsInstallationId;
+
+// Re-engagement deeplinks: forward the URL the app was opened with.
+// AppDelegate-only apps get cold launches captured automatically; scene-based
+// apps should forward from the UIScene delegate callbacks too.
+TenjinSDK.HandleOpenUrl(url);            // from OpenUrl / ContinueUserActivity
+TenjinSDK.HandleOpenUrlString("app://x"); // raw-string variant, safe before init
 ```
 
 ### Android — namespace `Com.Tenjin.Android`
@@ -51,6 +57,10 @@ tenjin.EventWithNameAndValue("level_up", 5);
 tenjin.Transaction("com.example.product", "USD", 1, 4.99);
 
 var installId = tenjin.AnalyticsInstallationId;
+
+// Re-engagement deeplinks: cold launches are captured automatically; forward
+// warm opens (OnNewIntent) so they are reported too.
+tenjin.HandleOpenIntent(intent);   // or tenjin.HandleOpenUrl(url)
 ```
 
 ## Sample app

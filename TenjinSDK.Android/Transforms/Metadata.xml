@@ -9,6 +9,7 @@
   <!-- Bind only the public-facing Tenjin API. Remove internal implementation
        namespaces so we don't expose internals (Room DAOs, param providers, network
        and threading helpers) or generate noise from unbound third-party types. -->
+  <remove-node path="/api/package[@name='com.tenjin.android.deeplink']" />
   <remove-node path="/api/package[@name='com.tenjin.android.store']" />
   <remove-node path="/api/package[@name='com.tenjin.android.network']" />
   <remove-node path="/api/package[@name='com.tenjin.android.config']" />
