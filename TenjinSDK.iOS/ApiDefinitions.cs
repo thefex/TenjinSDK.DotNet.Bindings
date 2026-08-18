@@ -101,6 +101,16 @@ interface TenjinSDK
 	[Export ("connectWithDeferredDeeplink:")]
 	void ConnectWithDeferredDeeplink (NSUrl url);
 
+	// +(void)handleOpenURL:(NSURL *)url;
+	[Static]
+	[Export ("handleOpenURL:")]
+	void HandleOpenUrl (NSUrl url);
+
+	// +(void)handleOpenURLString:(NSString *)urlString;
+	[Static]
+	[Export ("handleOpenURLString:")]
+	void HandleOpenUrlString (string urlString);
+
 	// +(void)sendEventWithName:(NSString *)eventName;
 	[Static]
 	[Export ("sendEventWithName:")]
