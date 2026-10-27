@@ -5,8 +5,8 @@ This package is **not affiliated with Tenjin**.
 
 | Platform | Project | Native SDK | NuGet id |
 | --- | --- | --- | --- |
-| iOS | [`TenjinSDK.iOS`](TenjinSDK.iOS) | [tenjin-ios-sdk 1.19.0](https://github.com/tenjin/tenjin-ios-sdk/releases/tag/1.19.0) | `TenjinSDK.DotNet.Bindings` |
-| Android | [`TenjinSDK.Android`](TenjinSDK.Android) | [tenjin-android-sdk 1.23.0](https://github.com/tenjin/tenjin-android-sdk/releases/tag/1.23.0) | `TenjinSDK.DotNet.Bindings.Android` |
+| iOS | [`TenjinSDK.iOS`](TenjinSDK.iOS) | [tenjin-ios-sdk 1.20.1](https://github.com/tenjin/tenjin-ios-sdk/releases/tag/1.20.1) | `TenjinSDK.DotNet.Bindings` |
+| Android | [`TenjinSDK.Android`](TenjinSDK.Android) | [tenjin-android-sdk 2.0.2](https://github.com/tenjin/tenjin-android-sdk/releases/tag/2.0.2) | `TenjinSDK.DotNet.Bindings.Android` |
 
 Both target **.NET 10** (`net10.0-ios` / `net10.0-android`).
 
@@ -42,6 +42,10 @@ var installId = TenjinSDK.AnalyticsInstallationId;
 // apps should forward from the UIScene delegate callbacks too.
 TenjinSDK.HandleOpenUrl(url);            // from OpenUrl / ContinueUserActivity
 TenjinSDK.HandleOpenUrlString("app://x"); // raw-string variant, safe before init
+
+// Opt in to automatic StoreKit 2 subscription / one-time purchase tracking (iOS 16+).
+TenjinSDK.EnableAutoSubscriptionTracking();
+TenjinSDK.EnableAutoPurchaseTracking();
 ```
 
 ### Android — namespace `Com.Tenjin.Android`
@@ -61,6 +65,11 @@ var installId = tenjin.AnalyticsInstallationId;
 // Re-engagement deeplinks: cold launches are captured automatically; forward
 // warm opens (OnNewIntent) so they are reported too.
 tenjin.HandleOpenIntent(intent);   // or tenjin.HandleOpenUrl(url)
+
+// Opt in to automatic Play Billing subscription / purchase tracking. The SDK reaches
+// the Play Billing library reflectively, so the consuming app must ship it.
+tenjin.EnableAutoSubscriptionTracking();
+tenjin.EnableAutoPurchaseTracking();
 ```
 
 ## Sample app
@@ -108,6 +117,12 @@ Google Play Billing and Play Services Ad-ID / App Set are accessed reflectively 
 SDK and are **not** declared — add them in the consuming app if you use those features
 (see the sample for the GAID setup).
 
+Since tenjin-android-sdk 2.0.0 the AAR ships R8-minified. The binding exposes only the
+API that Tenjin's own consumer ProGuard rules keep stable — `TenjinSDK`, its callback
+interfaces, `Transaction`, `AdvertiserInfo`, `UserProfileData` and `AppStoreType` —
+while minified internals (`EventKey`, `EventName`, `UserProfileManager`, the `Async*`
+tasks) are no longer bound.
+
 ## Building
 
 ```bash
@@ -118,3 +133,10 @@ dotnet build TenjinSDK.Android/TenjinSDK.Android.csproj -c Release # Android nup
 
 A repo-local [`nuget.config`](nuget.config) clears any machine-wide local feeds so the
 solution restores reproducibly from nuget.org.
+
+The .NET for iOS workload pins an Xcode version (27.1.x needs Xcode 27.1). If a different
+Xcode is selected on the machine, point the build at the right one:
+
+```bash
+dotnet build TenjinSDK.Sample/TenjinSDK.Sample.csproj -f net10.0-ios -p:XcodeLocation=/Applications/Xcode27_1.app
+```

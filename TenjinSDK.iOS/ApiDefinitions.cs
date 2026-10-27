@@ -175,6 +175,26 @@ interface TenjinSDK
 	[Export ("subscriptionWithStoreKitForProductId:andCurrencyCode:andUnitPrice:")]
 	void SubscriptionWithStoreKitForProductId (string productId, string currencyCode, NSDecimalNumber price);
 
+	// +(void)enableAutoSubscriptionTracking;
+	[Static]
+	[Export ("enableAutoSubscriptionTracking")]
+	void EnableAutoSubscriptionTracking ();
+
+	// +(void)disableAutoSubscriptionTracking;
+	[Static]
+	[Export ("disableAutoSubscriptionTracking")]
+	void DisableAutoSubscriptionTracking ();
+
+	// +(void)enableAutoPurchaseTracking;
+	[Static]
+	[Export ("enableAutoPurchaseTracking")]
+	void EnableAutoPurchaseTracking ();
+
+	// +(void)disableAutoPurchaseTracking;
+	[Static]
+	[Export ("disableAutoPurchaseTracking")]
+	void DisableAutoPurchaseTracking ();
+
 	// +(void)optOut;
 	[Static]
 	[Export ("optOut")]
