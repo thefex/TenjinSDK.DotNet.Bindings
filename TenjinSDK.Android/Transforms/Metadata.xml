@@ -6,6 +6,28 @@
   <attr path="/api/package[@name='com.tenjin.android']/class[@name='TenjinSDK']/method[@name='getAppStore']" name="propertyName"></attr>
   <attr path="/api/package[@name='com.tenjin.android']/class[@name='TenjinSDK']/method[@name='setAppStore']" name="propertyName"></attr>
 
+  <!-- Since 2.0.0 the AAR ships R8-minified. Shrinking widened many internal members of
+       TenjinSDK to public under one/two-letter names (fields a..L, methods a..k), which
+       would surface as A(), B(), G { get; } ... and collide (CS0111). Tenjin's consumer
+       ProGuard rules only keep the original public API, so drop the obfuscated members,
+       the widened constructor (getInstance is the documented entry point) and the
+       internal AsyncTask subclasses, whose doInBackground was widened to public and no
+       longer compiles against the protected base method (CS0507). -->
+  <remove-node path="/api/package[@name='com.tenjin.android']/class[@name='TenjinSDK']/method[string-length(@name)&lt;=2]" />
+  <remove-node path="/api/package[@name='com.tenjin.android']/class[@name='TenjinSDK']/field[string-length(@name)&lt;=2]" />
+  <remove-node path="/api/package[@name='com.tenjin.android']/class[@name='TenjinSDK']/constructor" />
+  <remove-node path="/api/package[@name='com.tenjin.android']/class[starts-with(@name,'TenjinSDK.Async')]" />
+
+  <!-- UserProfileManager is internal (absent from Tenjin's keep rules, minified since
+       2.0.0); the documented entry point is TenjinSDK.getUserProfile(). -->
+  <remove-node path="/api/package[@name='com.tenjin.android.userprofile']/class[starts-with(@name,'UserProfileManager')]" />
+
+  <!-- model.EventKey and model.EventName are internal as well: since 2.0.0 their
+       accessors are minified away (EventKey.getEventKey -> a, the EventName getters ->
+       public fields a..p), so nothing meaningful is left to bind. -->
+  <remove-node path="/api/package[@name='com.tenjin.android.model']/class[@name='EventKey']" />
+  <remove-node path="/api/package[@name='com.tenjin.android.model']/class[@name='EventName']" />
+
   <!-- Bind only the public-facing Tenjin API. Remove internal implementation
        namespaces so we don't expose internals (Room DAOs, param providers, network
        and threading helpers) or generate noise from unbound third-party types. -->
